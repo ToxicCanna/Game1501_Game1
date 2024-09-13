@@ -950,27 +950,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2036724457}
-  - component: {fileID: 2036724456}
+  - component: {fileID: 2036724458}
   m_Layer: 0
-  m_Name: ActOneSceneOne
+  m_Name: '[GameLogic]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2036724456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2036724455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 995d149f3fbb9414d9ecc5184b8ff839, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leeway: 0
 --- !u!4 &2036724457
 Transform:
   m_ObjectHideFlags: 0
@@ -986,6 +973,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2036724458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036724455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968f8d48e5ccbaa4a8bdb470fcbb1c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leeway: 0
+  currentSceneGameMode: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
