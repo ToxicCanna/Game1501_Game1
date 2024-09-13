@@ -26,6 +26,9 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     int currentPlayerPercent;
     bool countingUpwards;
 
+    int currentRepetition;
+    [SerializeField] int targetRepetition;
+
     public void RecordScore()
     {
         //tells ScoreManager to add a score. 
@@ -41,26 +44,41 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
         FindObjectOfType<PlayerInputs>().RegisterListener(this);
         startTime = Time.time;
         countingUpwards = true;
-        if (currentSceneGameMode == GameMode.RHYTHM)
+
+        switch (currentSceneGameMode)
         {
-            currentTimedPercent = 0;
+            case GameMode.PRESSANDHOLD:
+                break;
+            case GameMode.TIMEDCOOKING:
+                break;
+            case GameMode.STACKER:
+                break;
+            case GameMode.RHYTHM:
+                currentTimedPercent = 0;
+                break;
         }
+
     }
 
     public void Update()
     {
         currentTime = Time.time;
-
-        if (currentSceneGameMode == GameMode.RHYTHM)
+        switch (currentSceneGameMode)
         {
-            countingUpwards = ((int)(((currentTime - startTime) * gameSpeed)/100) %2 )== 0;
-            currentTimedPercent = (int)((currentTime - startTime)* gameSpeed)%100;
-            //Debug.Log(countingUpwards);
-            //Debug.Log((countingUpwards) ? currentTimedPercent : 100-currentTimedPercent);
-
-
-
+            case GameMode.PRESSANDHOLD:
+                break;
+            case GameMode.TIMEDCOOKING:
+                break;
+            case GameMode.STACKER:
+                break;
+            case GameMode.RHYTHM:
+                countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
+                currentTimedPercent = (int)((currentTime - startTime) * gameSpeed) % 100;
+                //Debug.Log(countingUpwards);
+                //Debug.Log((countingUpwards) ? currentTimedPercent : 100-currentTimedPercent);
+                break;
         }
+
     }
 
     public void ButtonHeld(ButtonInfo heldInfo)
@@ -70,20 +88,41 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void ButtonPressed(ButtonInfo pressedInfo)
     {
-        if (currentSceneGameMode == GameMode.RHYTHM)
+        switch (currentSceneGameMode)
         {
-            //record value here and send both this and currentTimedPercent to scoremanager
-            Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+            case GameMode.PRESSANDHOLD:
+                break;
+            case GameMode.TIMEDCOOKING:
+                break;
+            case GameMode.STACKER:
+                break;
+            case GameMode.RHYTHM:
+                Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent); 
+                //record value here and send both this and currentTimedPercent to scoremanager note score manager may want the countingupward, if upward you want the number small
+                currentRepetition++;
+                break;
         }
+
     }
 
     public void ButtonReleased(ButtonInfo releasedInfo)
     {
         Debug.Log("buttonReleased");
-        if (currentSceneGameMode == GameMode.RHYTHM)
+
+        switch (currentSceneGameMode)
         {
-            //record value here and send both this and currentTimedPercent to scoremanager
-            Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+            case GameMode.PRESSANDHOLD:
+                break;
+            case GameMode.TIMEDCOOKING:
+                break;
+            case GameMode.STACKER:
+                break;
+            case GameMode.RHYTHM:
+                Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+                //record value here and send both this and currentTimedPercent to scoremanager
+                currentRepetition++;
+                break;
         }
+
     }
 }
