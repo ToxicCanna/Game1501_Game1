@@ -9,7 +9,12 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public int CalculateScore(int leeway)
     {
-        //calc the score here using playerPerformancePercentage and targetPercentage, within leeway it is perfect. 
+        /*calc the score here using playerPerformancePercentage and targetPercentage, within leeway it is perfect. 
+        example:
+        90-100% = gold/perfect
+        70-89% = silver/good
+        50-69% = bronze/okay
+        <=49% = bad/fail*/
         if (playerPerformancePercentage.Count == targetPercentage.Count)
         { 
             
