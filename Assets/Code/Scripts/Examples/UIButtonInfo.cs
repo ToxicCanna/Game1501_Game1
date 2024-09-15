@@ -36,10 +36,12 @@ public class UIButtonInfo : MonoBehaviour, IButtonListener
             case ButtonState.Held:
                 buttonStateText.text = "Button Held";
                 buttonInfoText.text = $"Time held {buttonInfo.TimeHeld():0.##}";
+                GameManager.Instance.UpdatePerformance();
                 break;
             case ButtonState.Released:
                 buttonStateText.text = "Button Released";
                 buttonInfoText.text = $"Time held {buttonInfo.TimeHeld():0.##}";
+                GameManager.Instance.RecordPerformance();
                 break;
         }
     }

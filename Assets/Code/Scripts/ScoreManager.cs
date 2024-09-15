@@ -20,10 +20,12 @@ public class ScoreManager : Singleton<ScoreManager>
         // Calculate the score for each player performance
         foreach (int playerPerformance in playerPerformancePercentage)
         {
-            int chosenTarget = GetClosestTarget(playerPerformance);
+            int chosenTarget = GetClosestTarget(playerPerformance); 
+            //int chosenTarget = targetPercentage[0]; if you don't wanna use GetClosetTarget
+            //is the game supposed to work like the first input should check with first target & second input would check with second target & so on??
             int difference = Mathf.Abs(playerPerformance - chosenTarget);
             //if difference is less or equal to leeway give full score else subtract the difference
-            int score = (difference <= leeway) ? 100 : Mathf.Max(0, 100 - difference);
+            int score = (difference <= leeway) ? 1000 : Mathf.Max(0, 1000 - difference*10);
             totalScore += score;
 
             Debug.Log($"Performance: {playerPerformance}, Closest Target: {chosenTarget}, Difference: {difference}, Score: {score}");

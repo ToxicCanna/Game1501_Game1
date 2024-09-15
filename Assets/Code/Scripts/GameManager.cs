@@ -9,48 +9,50 @@ public class GameManager : Singleton<GameManager>
     private bool increasing = true;
     private bool spaceHeld = false;
     public float speedMultiplier = 1.0f;
+    private float updateInterval = 0.1f;
+    private float nextUpdateTime = 0f;
     private float holdTime = 0;
     private void Start()
     {
         GameLogic.Instance.SetupLevel();
     }
-    void Update()
+    public void UpdatePerformance()
     {
         if (Input.GetKey(KeyCode.Space))
         {
             spaceHeld = true;
             holdTime += Time.deltaTime;
-            float variableSpeed = Mathf.Clamp(holdTime * speedMultiplier, 1f, 5f);
-            if (increasing)
+            float variableSpeed = Mathf.Clamp(holdTime * speedMultiplier, .1f, 1f);
+            if (Time.time > nextUpdateTime)
             {
-                gameplayPlayerPercentValue += Mathf.RoundToInt(variableSpeed);
-                if (gameplayPlayerPercentValue >= 100)
-                {
-                    gameplayPlayerPercentValue = 100;
-                    increasing = false;
-                }
-            }
-            else
-            {
-                gameplayPlayerPercentValue -= Mathf.RoundToInt(variableSpeed);
-                if (gameplayPlayerPercentValue <= 0)
-                {
-                    gameplayPlayerPercentValue = 0;
-                    increasing = true;
-                }
-            }
-        }
+                nextUpdateTime = Time.time + updateInterval;
 
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            spaceHeld = false;
-            holdTime = 0f;
-            RecordPerformance();
+                if (increasing)
+                {
+                    gameplayPlayerPercentValue += Mathf.RoundToInt(variableSpeed);
+                    if (gameplayPlayerPercentValue >= 100)
+                    {
+                        gameplayPlayerPercentValue = 100;
+                        increasing = false;
+                    }
+                }
+                else
+                {
+                    gameplayPlayerPercentValue -= Mathf.RoundToInt(variableSpeed);
+                    if (gameplayPlayerPercentValue <= 0)
+                    {
+                        gameplayPlayerPercentValue = 0;
+                        increasing = true;
+                    }
+                }
+            }
         }
     }
 
-    private void RecordPerformance()
+    public void RecordPerformance()
     {
+        spaceHeld = false;
+        holdTime = 0f;
         Debug.Log("Player released space value-->" + gameplayPlayerPercentValue);
         ScoreManager.Instance.RecordPlayerPerformance(gameplayPlayerPercentValue);
         
