@@ -15,16 +15,18 @@ public class ScoreManager : Singleton<ScoreManager>
             
         }
 
-        return 0;
+        return -4000; //error
     }
 
     public void AddTargetPercentage(int targetPercent)
-    { 
+    {
         //add code hint:1 simple line    
+        targetPercentage.Add(targetPercent);
     }
 
     public void RecordPlayerPerformance(int playerPercent)
-    { 
+    {
         //add code same idea as above
+        playerPerformancePercentage.Add(playerPercent);
     }
 }
