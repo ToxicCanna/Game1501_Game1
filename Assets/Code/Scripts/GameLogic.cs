@@ -107,6 +107,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             switch (currentSceneGameMode)
             {
                 case GameMode.PRESSANDHOLD:
+                    currentPlayerPercent = Mathf.Clamp((int)((currentTime - buttonPressedTime) * gameSpeed), 0, 100);
+                    GameManager.Instance.revealState(currentPlayerPercent, getCurrentTarget());
                     break;
                 case GameMode.TIMEDCOOKING:
                     if (currentTime - buttonPressedTime > tapLeeway) //player held and not tapping
@@ -168,8 +170,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 currentTimedPercent = (int)((currentTime - buttonPressedTime) * gameSpeed);
                 currentTimedPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
                 Debug.Log("PressAndHold Score: " + currentTimedPercent);
+                GameManager.Instance.progressState(currentTimedPercent, getCurrentTarget());
                 RecordScore(currentTimedPercent);
-                currentRepetition++;
                 checkRepetition();
                 break;
             case GameMode.TIMEDCOOKING:
