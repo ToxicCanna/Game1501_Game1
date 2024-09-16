@@ -119,7 +119,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                         heldRecorded = true;
                         checkRepetition();
                         startTime = Time.time;
-                        if(gameOver == false)
+                        if(!gameOver)
                         {
                             GameManager.Instance.progressState(currentPlayerPercent, getCurrentTarget());
                         }
@@ -170,7 +170,10 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 currentTimedPercent = (int)((currentTime - buttonPressedTime) * gameSpeed);
                 currentTimedPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
                 Debug.Log("PressAndHold Score: " + currentTimedPercent);
-                GameManager.Instance.progressState(currentTimedPercent, getCurrentTarget());
+                if (!gameOver)
+                {
+                    GameManager.Instance.progressState(currentTimedPercent, getCurrentTarget());
+                }
                 RecordScore(currentTimedPercent);
                 checkRepetition();
                 break;
