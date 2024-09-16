@@ -14,7 +14,7 @@ public enum GameMode
 public class GameLogic : Singleton<GameLogic>, IButtonListener
 {
     [SerializeField] private int leeway; //leeway for this level
-    [SerializeField] private float tapLeeway; //a small int, if within this we will say the player didn't hold long enough
+    [SerializeField] private float tapLeeway; //a small int, if within this we will say the player didn't hold long enough. In stacker mode used to prevent button presses being close togeher
     [SerializeField] private GameMode currentSceneGameMode;
     //Structure basic game logic here. 
 
@@ -23,6 +23,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     private float startTime;
     private float currentTime;
     private float buttonPressedTime;
+    private float previousButtonPressTime;
 
     private int currentTimedPercent;
     private int currentPlayerPercent;
@@ -54,27 +55,21 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void Start()
     {
+        FindObjectOfType<PlayerInputs>().RegisterListener(this);
+        SetTargets();
+        StartMinigame(); //move this to ui later
         heldRecorded = false;
         currentRepetition = 0;
-        FindObjectOfType<PlayerInputs>().RegisterListener(this);
-        startTime = Time.time;
-        SetTargets();
         targetRepetition = targetValues.Length;
         countingUpwards = true; //this is currently true every gamemode
+        currentTimedPercent = 0;
+        
+    }
 
-        switch (currentSceneGameMode)
-        {
-            case GameMode.PRESSANDHOLD:
-                break;
-            case GameMode.TIMEDCOOKING:
-                break;
-            case GameMode.STACKER:
-                break;
-            case GameMode.RHYTHM:
-                currentTimedPercent = 0;
-                break;
-        }
-
+    public void StartMinigame()
+    { 
+        startTime = Time.time;
+        previousButtonPressTime = -tapLeeway;
     }
 
     public void Update()
@@ -139,9 +134,13 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             case GameMode.TIMEDCOOKING:
                 break;
             case GameMode.STACKER:
-                Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
-                RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
-                checkRepetition();
+                if (buttonPressedTime - previousButtonPressTime > tapLeeway) //have a cooldown to stop mashing
+                {
+                    previousButtonPressTime = buttonPressedTime;
+                    Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+                    RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+                    checkRepetition(); 
+                }
                 break;
             case GameMode.RHYTHM:
                 Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
@@ -193,6 +192,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     public void EndMinigame()
     {
         Debug.Log("minigames done");
+        Debug.Log(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
     }
 
     public void checkRepetition() //checks if player done the task enough reps

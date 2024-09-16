@@ -51,7 +51,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         int resultScore = 0;
         int numLength = 0;
-        for (int i = 0; i < playerPerformancePercentage.Count(), i++)
+        for (int i = 0; i < playerPerformancePercentage.Count(); i++)
         {
             int difference = targetPercentage[i] - playerPerformancePercentage[i];
             if (difference < leeway)
@@ -70,7 +70,7 @@ public class ScoreManager : Singleton<ScoreManager>
                     int numlineMin = targetPercentage[i] + leeway;
                     numLength = 100 - numlineMin;
                 }
-                resultScore += 1000 - (difference / numLength);
+                resultScore += 1000 - ((difference * 1000) / numLength);
             }
         }
         return resultScore;
@@ -84,13 +84,15 @@ public class ScoreManager : Singleton<ScoreManager>
         int avgScore = scoreSum / playerPerformancePercentage.Count();
         foreach (int performanceScore in playerPerformancePercentage)
         {
-            int difference = avgScore - performanceScore;
+            int difference = Mathf.Abs(avgScore - performanceScore);
+            Debug.Log("difference: " + difference);
             if (difference < leeway)
             {
                 resultScore += 1000;
             }
             else
             {
+                Debug.Log("this shouldnt be 1000");
                 if (avgScore >= 50)
                 {
                     int numlineMax = avgScore - leeway;
@@ -101,7 +103,8 @@ public class ScoreManager : Singleton<ScoreManager>
                     int numlineMin = avgScore + leeway;
                     numLength = 100 - numlineMin;
                 }
-                resultScore += 1000 - (difference / numLength);
+                Debug.Log(numLength);
+                resultScore += (1000 - ((difference * 1000) / numLength));
             }
         }
         return resultScore;
@@ -110,6 +113,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public Medal GetPerformanceMedal(int leeway, GameMode gameMode)
     {
         int resultingScore = CalculateScore(leeway, gameMode);
+        Debug.Log(resultingScore);
         if (resultingScore >= goldScore)
         {
             return Medal.GOLD;

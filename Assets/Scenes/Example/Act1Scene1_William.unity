@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30f8bb2510711f48a7aa90604ff4299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameplayPlayerPercentValue: 0
 --- !u!4 &207760555
 Transform:
   m_ObjectHideFlags: 0
@@ -926,6 +925,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7189adc3d95e9074781d2ce49c678bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bronzeScore: 1500
+  silverScore: 2000
+  goldScore: 2500
 --- !u!4 &1944332524
 Transform:
   m_ObjectHideFlags: 0
@@ -989,7 +991,7 @@ MonoBehaviour:
   tapLeeway: 5
   currentSceneGameMode: 0
   gameSpeed: 15
-  targetValues: 4600000046000000
+  targetValues: 3c0000003c000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

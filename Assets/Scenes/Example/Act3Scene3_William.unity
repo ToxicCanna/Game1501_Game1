@@ -991,7 +991,7 @@ MonoBehaviour:
   tapLeeway: 0.2
   currentSceneGameMode: 1
   gameSpeed: 5
-  targetValues: 4600000046000000
+  targetValues: 46000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
