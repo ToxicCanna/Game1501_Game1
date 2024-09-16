@@ -14,7 +14,7 @@ public enum GameMode
 public class GameLogic : Singleton<GameLogic>, IButtonListener
 {
     [SerializeField] private int leeway; //leeway for this level
-    [SerializeField] private int tapLeeway; //a small int, if within this we will say the player didn't hold long enough
+    [SerializeField] private float tapLeeway; //a small int, if within this we will say the player didn't hold long enough
     [SerializeField] private GameMode currentSceneGameMode;
     //Structure basic game logic here. 
 
@@ -33,16 +33,19 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     [SerializeField] private int[] targetValues;
 
     private int tempRecord;
+    private bool heldRecorded;
 
     public void RecordScore(int playerPercent)
     {
         //tells ScoreManager to add a score. 
         ScoreManager.Instance.RecordPlayerPerformance(playerPercent);
+        currentRepetition++;
     }
 
     public void SetTargets()
     {
         //tells ScoreManager to set targets
+        //note that for Stackers, the targets are not used and can be anything. 
         foreach (int targetValue in targetValues)
         {
             ScoreManager.Instance.AddTargetPercentage(targetValue);
@@ -51,6 +54,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void Start()
     {
+        heldRecorded = false;
+        currentRepetition = 0;
         FindObjectOfType<PlayerInputs>().RegisterListener(this);
         startTime = Time.time;
         SetTargets();
@@ -80,8 +85,11 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             case GameMode.PRESSANDHOLD:
                 break;
             case GameMode.TIMEDCOOKING:
+                currentTimedPercent = (int)((currentTime - startTime) * gameSpeed);
                 break;
             case GameMode.STACKER:
+                countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
+                currentTimedPercent = (int)((currentTime - startTime) * gameSpeed) % 100;
                 break;
             case GameMode.RHYTHM:
                 countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
@@ -96,6 +104,29 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     public void ButtonHeld(ButtonInfo heldInfo)
     {
         //Debug.Log("button Held");
+        if (!heldRecorded)
+        {
+            switch (currentSceneGameMode)
+            {
+                case GameMode.PRESSANDHOLD:
+                    break;
+                case GameMode.TIMEDCOOKING:
+                    if (currentTime - buttonPressedTime > tapLeeway) //player held and not tapping
+                    {
+                        currentPlayerPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
+                        //Debug.Log("recorded: " + currentPlayerPercent);
+                        RecordScore(currentPlayerPercent);
+                        heldRecorded = true;
+                        checkRepetition();
+                        startTime = Time.time;
+                    }
+                    break;
+                case GameMode.STACKER:
+                    break;
+                case GameMode.RHYTHM:
+                    break;
+            }
+        }
     }
 
     public void ButtonPressed(ButtonInfo pressedInfo)
@@ -108,17 +139,15 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             case GameMode.TIMEDCOOKING:
                 break;
             case GameMode.STACKER:
+                Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+                RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+                checkRepetition();
                 break;
             case GameMode.RHYTHM:
                 Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 //record value here and send both this and currentTimedPercent to scoremanager note score manager may want the countingupward, if upward you want the number small
                 //record both score on release, have a check there for tap
                 tempRecord = (countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent;
-                currentRepetition++;
-                if (currentRepetition == targetRepetition)
-                {
-                    EndMinigame();
-                }
                 break;
         }
 
@@ -133,8 +162,17 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 currentTimedPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
                 Debug.Log("PressAndHold Score: " + currentTimedPercent);
                 RecordScore(currentTimedPercent);
+                currentRepetition++;
+                checkRepetition();
                 break;
             case GameMode.TIMEDCOOKING:
+                heldRecorded = false;
+                if(currentTime - buttonPressedTime < tapLeeway)
+                { //player Tapped
+                    //tells UI to reveal percent
+                    currentPlayerPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
+                    GameManager.Instance.revealState(currentPlayerPercent);
+                }
                 break;
             case GameMode.STACKER:
                 break;
@@ -146,11 +184,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                     RecordScore(tempRecord);
                     RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 }
-                currentRepetition += 2;
-                if (currentRepetition >= targetRepetition)
-                {
-                    EndMinigame();
-                }
+                checkRepetition();
                 break;
         }
 
@@ -158,6 +192,14 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void EndMinigame()
     {
-        Debug.Log("games done");
+        Debug.Log("minigames done");
+    }
+
+    public void checkRepetition() //checks if player done the task enough reps
+    {
+        if (currentRepetition >= targetRepetition)
+        {
+            EndMinigame();
+        }
     }
 }
