@@ -987,11 +987,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968f8d48e5ccbaa4a8bdb470fcbb1c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leeway: 10
+  leeway: 5
   tapLeeway: 5
   currentSceneGameMode: 0
   gameSpeed: 15
-  targetValues: 3c0000003c000000
+  targetValues: 5a0000005a000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

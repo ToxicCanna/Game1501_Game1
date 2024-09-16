@@ -988,10 +988,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leeway: 10
-  tapLeeway: 5
-  currentSceneGameMode: 0
-  gameSpeed: 15
-  targetValues: 3c0000003c000000
+  tapLeeway: 0.2
+  currentSceneGameMode: 1
+  gameSpeed: 5
+  targetValues: 4600000046000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
