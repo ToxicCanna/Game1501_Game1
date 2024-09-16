@@ -40,9 +40,13 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void RecordScore(int playerPercent)
     {
-        //tells ScoreManager to add a score. 
-        ScoreManager.Instance.RecordPlayerPerformance(playerPercent);
-        currentRepetition++;
+        if (!gameOver)
+        {
+            //tells ScoreManager to add a score. 
+            ScoreManager.Instance.RecordPlayerPerformance(playerPercent);
+            currentRepetition++;
+        }
+
     }
 
     public void SetTargets()
@@ -108,7 +112,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             {
                 case GameMode.PRESSANDHOLD:
                     currentPlayerPercent = Mathf.Clamp((int)((currentTime - buttonPressedTime) * gameSpeed), 0, 100);
-                    GameManager.Instance.revealState(currentPlayerPercent, getCurrentTarget());
+                    RevealState(currentPlayerPercent);
                     break;
                 case GameMode.TIMEDCOOKING:
                     if (currentTime - buttonPressedTime > tapLeeway) //player held and not tapping
@@ -119,11 +123,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                         heldRecorded = true;
                         checkRepetition();
                         startTime = Time.time;
-                        if(!gameOver)
-                        {
-                            GameManager.Instance.progressState(currentPlayerPercent, getCurrentTarget());
-                        }
-
+                        ProgressState(currentPlayerPercent);
                     }
                     break;
                 case GameMode.STACKER:
@@ -170,12 +170,10 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 currentTimedPercent = (int)((currentTime - buttonPressedTime) * gameSpeed);
                 currentTimedPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
                 Debug.Log("PressAndHold Score: " + currentTimedPercent);
-                if (!gameOver)
-                {
-                    GameManager.Instance.progressState(currentTimedPercent, getCurrentTarget());
-                }
                 RecordScore(currentTimedPercent);
                 checkRepetition();
+                ProgressState(currentTimedPercent);
+                
                 break;
             case GameMode.TIMEDCOOKING:
                 heldRecorded = false;
@@ -183,7 +181,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 { //player Tapped
                     //tells UI to reveal percent
                     currentPlayerPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
-                    GameManager.Instance.revealState(currentPlayerPercent, getCurrentTarget());
+                    RevealState(currentPlayerPercent);
                 }
                 break;
             case GameMode.STACKER:
@@ -224,6 +222,27 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public int getCurrentTarget()
     {
-        return targetValues[currentRepetition];
+        if (currentRepetition <= targetValues.Length -1) //prevents presses that leak through after game is over
+        {
+            return targetValues[currentRepetition];
+        }
+        return 0;
+    }
+
+    public void RevealState(int percent)
+    {
+        if (!gameOver)
+        {
+            GameManager.Instance.RevealState(percent, getCurrentTarget());
+        }
+        
+    }
+
+    public void ProgressState(int percent)
+    {
+        if (!gameOver)
+        {
+            GameManager.Instance.ProgressState(percent, getCurrentTarget());
+        }
     }
 }

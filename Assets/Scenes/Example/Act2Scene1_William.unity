@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30f8bb2510711f48a7aa90604ff4299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameUI: {fileID: 0}
+  gameUI: {fileID: 1332788007}
 --- !u!4 &207760555
 Transform:
   m_ObjectHideFlags: 0
@@ -552,6 +552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1332788005}
   - component: {fileID: 1332788006}
+  - component: {fileID: 1332788007}
   m_Layer: 5
   m_Name: Bread
   m_TagString: Untagged
@@ -633,6 +634,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1332788007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332788004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e7d80b1d0327345b16be11f724a21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  child_SpriteRenderer: {fileID: 724593676}
+  butterRenderers:
+  - {fileID: 724593676}
+  - {fileID: 2116631656}
+  - {fileID: 1456536232}
 --- !u!1 &1456536230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,7 +1278,7 @@ MonoBehaviour:
   tapLeeway: 5
   currentSceneGameMode: 0
   gameSpeed: 15
-  targetValues: 5a0000005a000000
+  targetValues: 5a0000005a0000005a000000
 --- !u!1 &2116631654
 GameObject:
   m_ObjectHideFlags: 0
