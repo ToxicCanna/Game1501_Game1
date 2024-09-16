@@ -36,6 +36,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     private int tempRecord;
     private bool heldRecorded;
 
+    private bool gameOver;
+
     public void RecordScore(int playerPercent)
     {
         //tells ScoreManager to add a score. 
@@ -55,6 +57,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void Start()
     {
+        gameOver = false;
         FindObjectOfType<PlayerInputs>().RegisterListener(this);
         SetTargets();
         StartMinigame(); //move this to ui later
@@ -114,6 +117,11 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                         heldRecorded = true;
                         checkRepetition();
                         startTime = Time.time;
+                        if(gameOver == false)
+                        {
+                            GameManager.Instance.progressState(currentPlayerPercent, getCurrentTarget());
+                        }
+
                     }
                     break;
                 case GameMode.STACKER:
@@ -170,7 +178,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 { //player Tapped
                     //tells UI to reveal percent
                     currentPlayerPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
-                    GameManager.Instance.revealState(currentPlayerPercent);
+                    GameManager.Instance.revealState(currentPlayerPercent, getCurrentTarget());
                 }
                 break;
             case GameMode.STACKER:
@@ -191,6 +199,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void EndMinigame()
     {
+        gameOver = true;
         Debug.Log("minigames done");
         Debug.Log(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
     }
@@ -201,5 +210,15 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
         {
             EndMinigame();
         }
+    }
+
+    public int getLeeway()
+    {
+        return leeway;
+    }
+
+    public int getCurrentTarget()
+    {
+        return targetValues[currentRepetition];
     }
 }
