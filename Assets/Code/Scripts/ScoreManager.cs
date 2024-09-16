@@ -21,12 +21,17 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public int CalculateScore(int leeway, GameMode gameMode)
     {
+        /*calc the score here using playerPerformancePercentage and targetPercentage, within leeway it is perfect. 
+        example:
+        90-100% = gold/perfect
+        70-89% = silver/good
+        50-69% = bronze/okay
+        <=49% = bad/fail*/
         //stacker gameMode is unique so make it a unique calc
         if (gameMode == GameMode.STACKER)
         {
             return CalcScoreAverage(leeway);
         }
-        //calc the score here using playerPerformancePercentage and targetPercentage, within leeway it is perfect. 
         if (playerPerformancePercentage.Count == targetPercentage.Count)
         {
             return CalcScoreWithTargets(leeway);
