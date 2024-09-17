@@ -419,7 +419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.88, y: -3.67}
+  m_AnchoredPosition: {x: -6, y: -3.67}
   m_SizeDelta: {x: 4.01, y: 4.9}
   m_Pivot: {x: 0, y: 0}
 --- !u!212 &724593676
@@ -568,7 +568,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332788004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 60, y: 60, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -684,7 +684,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.1100001, y: -3.6700006}
+  m_AnchoredPosition: {x: 2, y: -3.6700006}
   m_SizeDelta: {x: 4.01, y: 4.9}
   m_Pivot: {x: 0, y: 0}
 --- !u!212 &1456536232
@@ -1064,6 +1064,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681182091}
   m_CullTransparentMesh: 1
+--- !u!1 &1812509507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1812509508}
+  m_Layer: 0
+  m_Name: '[CarryOver]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1812509508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812509507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1936035253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,7 +1343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.91, y: -3.67}
+  m_AnchoredPosition: {x: -2, y: -3.67}
   m_SizeDelta: {x: 4.01, y: 4.9}
   m_Pivot: {x: 0, y: 0}
 --- !u!212 &2116631656
@@ -1379,3 +1410,4 @@ SceneRoots:
   - {fileID: 207760555}
   - {fileID: 1944332524}
   - {fileID: 2036724457}
+  - {fileID: 1812509508}
