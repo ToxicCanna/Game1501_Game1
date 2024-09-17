@@ -92,6 +92,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             case GameMode.STACKER:
                 countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
                 currentTimedPercent = (int)((currentTime - startTime) * gameSpeed) % 100;
+                RevealState((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 break;
             case GameMode.RHYTHM:
                 countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
@@ -149,7 +150,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                     previousButtonPressTime = buttonPressedTime;
                     Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                     RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
-                    checkRepetition(); 
+                    checkRepetition();
+                    ProgressState((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 }
                 break;
             case GameMode.RHYTHM:
