@@ -36,11 +36,17 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     private int tempRecord;
     private bool heldRecorded;
 
+    private bool gameOver;
+
     public void RecordScore(int playerPercent)
     {
-        //tells ScoreManager to add a score. 
-        ScoreManager.Instance.RecordPlayerPerformance(playerPercent);
-        currentRepetition++;
+        if (!gameOver)
+        {
+            //tells ScoreManager to add a score. 
+            ScoreManager.Instance.RecordPlayerPerformance(playerPercent);
+            currentRepetition++;
+        }
+
     }
 
     public void SetTargets()
@@ -55,6 +61,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void Start()
     {
+        gameOver = false;
         FindObjectOfType<PlayerInputs>().RegisterListener(this);
         SetTargets();
         StartMinigame(); //move this to ui later
@@ -85,6 +92,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             case GameMode.STACKER:
                 countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
                 currentTimedPercent = (int)((currentTime - startTime) * gameSpeed) % 100;
+                RevealState((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 break;
             case GameMode.RHYTHM:
                 countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
@@ -104,6 +112,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             switch (currentSceneGameMode)
             {
                 case GameMode.PRESSANDHOLD:
+                    currentPlayerPercent = Mathf.Clamp((int)((currentTime - buttonPressedTime) * gameSpeed), 0, 100);
+                    RevealState(currentPlayerPercent);
                     break;
                 case GameMode.TIMEDCOOKING:
                     if (currentTime - buttonPressedTime > tapLeeway) //player held and not tapping
@@ -114,6 +124,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                         heldRecorded = true;
                         checkRepetition();
                         startTime = Time.time;
+                        ProgressState(currentPlayerPercent);
                     }
                     break;
                 case GameMode.STACKER:
@@ -139,7 +150,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                     previousButtonPressTime = buttonPressedTime;
                     Debug.Log((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                     RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
-                    checkRepetition(); 
+                    checkRepetition();
+                    ProgressState((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 }
                 break;
             case GameMode.RHYTHM:
@@ -161,8 +173,9 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 currentTimedPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
                 Debug.Log("PressAndHold Score: " + currentTimedPercent);
                 RecordScore(currentTimedPercent);
-                currentRepetition++;
                 checkRepetition();
+                ProgressState(currentTimedPercent);
+                
                 break;
             case GameMode.TIMEDCOOKING:
                 heldRecorded = false;
@@ -170,7 +183,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 { //player Tapped
                     //tells UI to reveal percent
                     currentPlayerPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
-                    GameManager.Instance.revealState(currentPlayerPercent);
+                    RevealState(currentPlayerPercent);
                 }
                 break;
             case GameMode.STACKER:
@@ -191,6 +204,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     public void EndMinigame()
     {
+        gameOver = true;
         Debug.Log("minigames done");
         Debug.Log(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
     }
@@ -200,6 +214,37 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
         if (currentRepetition >= targetRepetition)
         {
             EndMinigame();
+        }
+    }
+
+    public int getLeeway()
+    {
+        return leeway;
+    }
+
+    public int getCurrentTarget()
+    {
+        if (currentRepetition <= targetValues.Length -1) //prevents presses that leak through after game is over
+        {
+            return targetValues[currentRepetition];
+        }
+        return 0;
+    }
+
+    public void RevealState(int percent)
+    {
+        if (!gameOver)
+        {
+            GameManager.Instance.RevealState(percent, getCurrentTarget());
+        }
+        
+    }
+
+    public void ProgressState(int percent)
+    {
+        if (!gameOver)
+        {
+            GameManager.Instance.ProgressState(percent, getCurrentTarget());
         }
     }
 }
