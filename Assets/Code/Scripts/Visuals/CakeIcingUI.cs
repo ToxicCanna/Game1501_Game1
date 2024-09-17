@@ -35,7 +35,7 @@ public class CakeIcingUI : GameplayUI
 
     public override void RecieveProgress(int percent, int target, int leeway)
     {
-        if (icingRenderers[icingSection * 2 + 1].transform.localScale.x < 0.15f)
+        if (icingRenderers[icingSection * 2 + 1].transform.localScale.y < 0.015f)
         {
             icingRenderers[icingSection * 2 + 1].transform.localScale = new Vector3(0.1f, 0f, 1);
         }
