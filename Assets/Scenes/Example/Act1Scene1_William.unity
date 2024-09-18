@@ -790,7 +790,7 @@ GameObject:
   - component: {fileID: 1761362780}
   - component: {fileID: 1761362781}
   m_Layer: 5
-  m_Name: Square
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 1835800226}
   - component: {fileID: 1835800227}
   m_Layer: 5
-  m_Name: Square
+  m_Name: HandWithEgg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

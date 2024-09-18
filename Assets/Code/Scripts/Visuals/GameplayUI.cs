@@ -5,8 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public abstract class GameplayUI : MonoBehaviour
 {
-    protected SpriteRenderer m_SpriteRenderer;
+    [SerializeField] protected SpriteRenderer m_SpriteRenderer;
     [SerializeField] protected SpriteRenderer child_SpriteRenderer;
+    [SerializeField] protected SpriteRenderer effectRenderer;
 
     // Start is called before the first frame update
     void Start()

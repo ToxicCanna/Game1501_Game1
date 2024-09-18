@@ -59,6 +59,7 @@ public class ScoreManager : Singleton<ScoreManager>
         for (int i = 0; i < playerPerformancePercentage.Count(); i++)
         {
             int difference = targetPercentage[i] - playerPerformancePercentage[i];
+            
             if (difference < leeway)
             {
                 resultScore += 1000;
