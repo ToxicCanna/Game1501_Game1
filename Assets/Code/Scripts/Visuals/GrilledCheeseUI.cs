@@ -11,17 +11,20 @@ public class GrilledCheeseUI : GameplayUI
 
     void Start()
     {
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
         currentSandwichBody = 0;
     }
 
     void Update()
     {
-        if (timeFlipStart + flipTime < Time.time) //unflip the egg
+        if (timeFlipStart + flipTime < Time.time) //unflip the sandwich
         {
             m_SpriteRenderer.sprite = grilledCheeseSpriteData.sandwichBody[currentSandwichBody];
             m_SpriteRenderer.gameObject.SetActive(true);
             child_SpriteRenderer.gameObject.SetActive(false);
+            if (currentSandwichBody != 2)
+            {
+                effectRenderer.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -33,24 +36,28 @@ public class GrilledCheeseUI : GameplayUI
             m_SpriteRenderer.gameObject.SetActive(false);
             child_SpriteRenderer.sprite = grilledCheeseSpriteData.sandwichFlipped[0];
             child_SpriteRenderer.gameObject.SetActive(true);
+            effectRenderer.gameObject.SetActive(false);
         }
         else if (percent < (target - leeway))
         {
             m_SpriteRenderer.gameObject.SetActive(false);
             child_SpriteRenderer.sprite = grilledCheeseSpriteData.sandwichFlipped[1];
             child_SpriteRenderer.gameObject.SetActive(true);
+            effectRenderer.gameObject.SetActive(false);
         }
         else if (percent >= (target - leeway) && percent <= (target + leeway))
         {
             m_SpriteRenderer.gameObject.SetActive(false);
             child_SpriteRenderer.sprite = grilledCheeseSpriteData.sandwichFlipped[2];
             child_SpriteRenderer.gameObject.SetActive(true);
+            effectRenderer.gameObject.SetActive(true);
         }
         else
         {
             m_SpriteRenderer.gameObject.SetActive(false);
             child_SpriteRenderer.sprite = grilledCheeseSpriteData.sandwichFlipped[3];
             child_SpriteRenderer.gameObject.SetActive(true);
+            effectRenderer.gameObject.SetActive(false);
         }
 
     }
@@ -71,6 +78,7 @@ public class GrilledCheeseUI : GameplayUI
         {
             m_SpriteRenderer.sprite = grilledCheeseSpriteData.sandwichBody[2];
             currentSandwichBody = 2;
+            effectRenderer.gameObject.SetActive(true);
         }
         else
         {
