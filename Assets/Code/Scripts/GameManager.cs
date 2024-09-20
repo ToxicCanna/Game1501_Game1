@@ -30,6 +30,11 @@ public class GameManager : Singleton<GameManager>
         gameUI.RecieveProgress(currentPercent, currentTarget, leeway);
     }
 
+    public void UpdateMedalText(Medal playerMedal)
+    {
+        gameUI.UpdateMedalText(playerMedal);
+    }
+
     //When calling this function use the scene index in build settings to call specific scenes, EX. ChangeLevel(0) for main menu
     public void ChangeLevel()
     {

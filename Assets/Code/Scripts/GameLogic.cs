@@ -223,9 +223,9 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     public void EndMinigame()
     {
         gameOver = true;
-        Debug.Log("minigames done");
-        Debug.Log(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
-
+        //Debug.Log("minigames done");
+        //Debug.Log(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
+        GameManager.Instance.UpdateMedalText(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
         //change level after minigame is complete
         StartCoroutine(DelayedLevelChange());
     }
