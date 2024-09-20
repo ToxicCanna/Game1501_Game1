@@ -47,6 +47,11 @@ public class GameManager : Singleton<GameManager>
             nextSceneIndex = 0; //Default to menu
         }
 
+        if (nextSceneIndex == 4 || nextSceneIndex == 7)
+        {
+            nextSceneIndex = 0;
+        }
+
         // Load the next scene
         SceneManager.LoadScene(nextSceneIndex);
     }
