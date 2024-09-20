@@ -58,7 +58,7 @@ public class ScoreManager : Singleton<ScoreManager>
         int numLength = 0;
         for (int i = 0; i < playerPerformancePercentage.Count(); i++)
         {
-            int difference = targetPercentage[i] - playerPerformancePercentage[i];
+            int difference = Mathf.Abs(targetPercentage[i] - playerPerformancePercentage[i]);
             
             if (difference < leeway)
             {
