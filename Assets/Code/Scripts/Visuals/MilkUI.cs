@@ -21,7 +21,7 @@ public class MilkUI : GameplayUI
     {
         milkHeight = percent * 0.01f * containerHeight;
         milkRenderers[milkSection].transform.localScale = new Vector3(1, milkHeight, 1);
-        progressRenderers[milkSection].transform.localScale = new Vector3(1, milkHeight/4, 1);
+        progressRenderers[milkSection].transform.localScale = new Vector3(1, milkHeight/8, 1);
 
     }
 
