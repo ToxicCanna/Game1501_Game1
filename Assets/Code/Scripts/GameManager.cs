@@ -31,10 +31,24 @@ public class GameManager : Singleton<GameManager>
     }
 
     //When calling this function use the scene index in build settings to call specific scenes, EX. ChangeLevel(0) for main menu
-    public void ChangeLevel(int buildIndex)
+    public void ChangeLevel()
     {
-        Debug.Log("Changing Scene to " + buildIndex);
-        SceneManager.LoadScene(buildIndex, LoadSceneMode.Single);
+        Debug.Log("New level loaded");
+
+        // Get the current scene index
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        // Increment the index to load the next scene
+        int nextSceneIndex = currentSceneIndex + 1;
+
+        // Check if next scene doesnt exist
+        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0; //Default to menu
+        }
+
+        // Load the next scene
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
     //call if game is to quit, in editor this will close playmode, in a build it will close game

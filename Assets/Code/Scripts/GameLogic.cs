@@ -225,6 +225,9 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
         gameOver = true;
         Debug.Log("minigames done");
         Debug.Log(ScoreManager.Instance.GetPerformanceMedal(leeway, currentSceneGameMode));
+
+        //change level after minigame is complete
+        StartCoroutine(DelayedLevelChange());
     }
 
     public void checkRepetition() //checks if player done the task enough reps
@@ -265,5 +268,15 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
             Debug.Log("currentrep" + currentRepetition);
             GameManager.Instance.ProgressState(percent, getCurrentTarget());
         }
+    }
+
+    //delayed level change logic
+    private IEnumerator DelayedLevelChange()
+    {
+        //wait until delay is over, then change scene, set to 5 seconds but can adjust as needed
+        Debug.Log("Level Complete!");
+        yield return new WaitForSeconds(5f);
+
+        GameManager.Instance.ChangeLevel();
     }
 }
