@@ -35,7 +35,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
 
     private int tempRecord;
     private bool heldRecorded;
-
+    private bool toldPlayerToHold;
     private bool gameOver;
 
     public void RecordScore(int playerPercent)
@@ -70,7 +70,9 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
         targetRepetition = targetValues.Length;
         countingUpwards = true; //this is currently true every gamemode
         currentTimedPercent = 0;
-        
+        toldPlayerToHold = false;
+
+
     }
 
     public void StartMinigame()
@@ -95,8 +97,21 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 RevealState((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 break;
             case GameMode.RHYTHM:
-                countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
-                currentTimedPercent = (int)((currentTime - startTime) * gameSpeed) % 100;
+                if (!gameOver)
+                {
+                    countingUpwards = ((int)(((currentTime - startTime) * gameSpeed) / 100) % 2) == 0;
+                    currentTimedPercent = (int)((currentTime - startTime) * gameSpeed) % 100;
+                    if (currentTimedPercent == targetValues[currentRepetition] && !toldPlayerToHold)
+                    {
+                        toldPlayerToHold = true;
+                        RevealState(currentTimedPercent);
+                    }
+                    if (currentTimedPercent == targetValues[currentRepetition + 1] && toldPlayerToHold)
+                    {
+                        toldPlayerToHold = false;
+                        RevealState(currentTimedPercent);
+                    }
+                }
                 //Debug.Log(countingUpwards);
                 //Debug.Log((countingUpwards) ? currentTimedPercent : 100-currentTimedPercent);
                 break;
@@ -159,6 +174,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 //record value here and send both this and currentTimedPercent to scoremanager note score manager may want the countingupward, if upward you want the number small
                 //record both score on release, have a check there for tap
                 tempRecord = (countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent;
+                ProgressState(tempRecord);
                 break;
         }
 
@@ -172,9 +188,9 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 currentTimedPercent = (int)((currentTime - buttonPressedTime) * gameSpeed);
                 currentTimedPercent = Mathf.Clamp(currentTimedPercent, 0, 100);
                 Debug.Log("PressAndHold Score: " + currentTimedPercent);
+                ProgressState(currentTimedPercent);
                 RecordScore(currentTimedPercent);
                 checkRepetition();
-                ProgressState(currentTimedPercent);
                 
                 break;
             case GameMode.TIMEDCOOKING:
@@ -195,6 +211,8 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
                 { 
                     RecordScore(tempRecord);
                     RecordScore((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
+                    toldPlayerToHold = false;
+                    ProgressState((countingUpwards) ? currentTimedPercent : 100 - currentTimedPercent);
                 }
                 checkRepetition();
                 break;
@@ -228,7 +246,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
         {
             return targetValues[currentRepetition];
         }
-        return 0;
+        return -1;
     }
 
     public void RevealState(int percent)
@@ -244,6 +262,7 @@ public class GameLogic : Singleton<GameLogic>, IButtonListener
     {
         if (!gameOver)
         {
+            Debug.Log("currentrep" + currentRepetition);
             GameManager.Instance.ProgressState(percent, getCurrentTarget());
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EggUI : GameplayUI
 {
-    public EggScriptableObject eggSpriteData;
+    [SerializeField] private EggScriptableObject eggSpriteData;
     private float timeFlipStart;
     [SerializeField] private float flipTime;
     private int currentEggBody;
