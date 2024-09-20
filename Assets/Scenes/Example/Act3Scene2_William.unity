@@ -640,7 +640,7 @@ MonoBehaviour:
   child_SpriteRenderer: {fileID: 494465485}
   effectRenderer: {fileID: 0}
   m_Text: {fileID: 1999698815}
-  mixScriptableObject: {fileID: 0}
+  mixScriptableObject: {fileID: 11400000, guid: 1031c5f659f600344a3409784be0a53e, type: 2}
 --- !u!1 &1526781715
 GameObject:
   m_ObjectHideFlags: 0
