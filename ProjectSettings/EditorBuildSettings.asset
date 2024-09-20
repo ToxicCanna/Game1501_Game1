@@ -6,6 +6,39 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Example/OneButtonScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Example/MainMenu.unity
+    guid: 2c3ba04aa3b24204c80ca96b33e7f593
+  - enabled: 1
+    path: Assets/Scenes/Example/MainMenuRecipe.unity
+    guid: 5a57441ef20410049a19a4147be23e89
+  - enabled: 1
+    path: Assets/Scenes/Example/Act1Scene1_William.unity
+    guid: d85a7102413f2d84b9df6b98b7bc8986
+  - enabled: 1
+    path: Assets/Scenes/Example/Act1Scene2_William.unity
+    guid: c780b45222a20894fa689c9a01ed40b0
+  - enabled: 1
+    path: Assets/Scenes/Example/Act2Scene1_William.unity
+    guid: 700fbc0d1d80f6a4fa71fa9787a7cc1f
+  - enabled: 1
+    path: Assets/Scenes/Example/Act2Scene2_William.unity
+    guid: cc0cd7bd74fd4d743891736ce571923e
+  - enabled: 1
+    path: Assets/Scenes/Example/Act2Scene3_William.unity
+    guid: 891034538484a8e48a94e9c4b780d83d
+  - enabled: 0
+    path: Assets/Scenes/Example/Act3Scene1_William.unity
+    guid: 2e48979c788b60e43997c624aa502eda
+  - enabled: 1
+    path: Assets/Scenes/Example/Act3Scene1_Sayed.unity
+    guid: 3501f8254331fe94ea59012d4162aff9
+  - enabled: 1
+    path: Assets/Scenes/Example/Act3Scene2_William.unity
+    guid: e58cfa32aeb80a6478438eb997123ac8
+  - enabled: 0
+    path: Assets/Scenes/Example/Act3Scene3_William.unity
+    guid: a1c2f635623eeb34cb9d5ae31463ce46
+  - enabled: 1
+    path: Assets/Scenes/Example/Act3Scene4_William.unity
+    guid: d340623862265084c945ae4deacdd226
   m_configObjects: {}

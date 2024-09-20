@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814bd4c22e94f5845984a44ddabef676, type: 3}
+  m_Name: GrilledCheeseSpriteData
+  m_EditorClassIdentifier: 
+  sandwichBody:
+  - {fileID: 21300000, guid: d2dde0b4d1c594f4db5109f67b45b2a4, type: 3}
+  - {fileID: 21300000, guid: 20678cf2b59cf9d43a55c4632eab140c, type: 3}
+  - {fileID: 21300000, guid: 5feebad47247be04ead1959d74208f8e, type: 3}
+  - {fileID: 21300000, guid: 51a626931b770f540a1e64e683ca7209, type: 3}
+  sandwichFlipped:
+  - {fileID: 21300000, guid: fa133220428b310409b2319babc7643e, type: 3}
+  - {fileID: 21300000, guid: 74aadf43f3fff5a4684e306516795f59, type: 3}
+  - {fileID: 21300000, guid: 5f3bc908a7bda6549927f0d2eb37c083, type: 3}
+  - {fileID: 21300000, guid: c14ee739397465746bf52e40a47641e8, type: 3}

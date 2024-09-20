@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f249cc623bdebd4e961a28a18057b85, type: 3}
+  m_Name: MixingSpriteData
+  m_EditorClassIdentifier: 
+  mixingBowlBody:
+  - {fileID: 21300000, guid: 7df916d52ef7cab43a2f2deac54f981b, type: 3}
+  - {fileID: 21300000, guid: 723e622420ca017419977f5a6bcdd760, type: 3}
